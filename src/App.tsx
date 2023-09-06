@@ -2,22 +2,29 @@ import React, { useState } from 'react';
 import './App.css';
 import Word from './Letter';
 
-interface AnswerProps {
+type AnswerType = {
   answer: string
+  enabled: boolean;
 }
+
+interface AnswerProps {
+  answer: AnswerProps
+}
+
+
 
 function App() {
   const [letter, setLetter] = useState([]);
-  const ANSWER: string = 'beast';
+  
 
 
   return (
     <>
-    <Word answer={ANSWER}/>
-    <Word answer={ANSWER}/>
-    <Word answer={ANSWER}/>
-    <Word answer={ANSWER}/>
-    <Word answer={ANSWER}/>
+    <Word answer='beast' enabled={true} />
+    <Word answer='beast' enabled={false}/>
+    <Word answer='beast' enabled={false}/>
+    <Word answer='beast' enabled={false}/>
+    <Word answer='beast' enabled={false}/>
 
     </>
     
