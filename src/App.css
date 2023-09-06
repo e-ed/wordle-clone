@@ -2,9 +2,22 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.letter {
+  background-color: rgb(49, 49, 49);
+  width: 50px;
+  height: 50px;
+  flex-direction: column;
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 4%;
+  color: transparent;
+  text-shadow: 0px 0px 1px #fff;
+}
+
+body {
+  background-color: #282c34;
 }
 
 @media (prefers-reduced-motion: no-preference) {
