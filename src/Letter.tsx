@@ -5,21 +5,42 @@ interface AnswerProps {
   enabled: boolean
 }
 
+interface KeyboardEvent {
+  key: string;
+}
 
 
 const Word: FC<AnswerProps> = ({answer, enabled}): JSX.Element => {
   let newLetters: string = ""
+  let test = "";
   const [letter, setLetter] = useState<string>("");
+  const [state, setState] = useState("");
+  const ref = useRef(null);
 
-   const handleKeyDown = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     
     //console.log(e.target.value);
   
-    const newLetter = e.target.value;
+    let newLetter = e.target.value;
     newLetters += newLetter;
     setLetter(newLetters);
     console.log(letter);
    
+
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleInput)
+  })
+
+  const handleInput = (e: KeyboardEvent) => {
+    let newLetter = e.key;
+    test += newLetter;
+    setState(test);
+    console.log(state)
+    //console.log(newLetter)
+    //console.log("state = " + newLetters)
+    
 
   }
 
@@ -39,7 +60,7 @@ const Word: FC<AnswerProps> = ({answer, enabled}): JSX.Element => {
 
       <form onSubmit={handleSubmit}>
         
-      <input autoFocus maxLength={5} onChange={(e) => handleKeyDown(e)} type='text'></input>
+      <input value={state} ref={ref} autoFocus maxLength={5} onChange={(e) => handleChange(e)} type='text'></input>
 
       <div className='letter' > {enabled == false ? null : letter[0]}</div> 
       <div className='letter' >{enabled == false ? null : letter[1]}</div> 
