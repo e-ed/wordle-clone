@@ -11,7 +11,7 @@ import Word from './Word';
 
 function App() {
 
-  const wordleAnswer: string = 'BEAST';
+  const wordleAnswer: string = 'STARE';
   let newLetters: string = ""
 
   const [guess, setGuess] = useState<{currentGuess: string, previousGuesses: string[]}>({
@@ -28,14 +28,15 @@ function App() {
 
   let checkLetters = (w1:string[], w2:string[]) => {
     let a:string[] = [];
-    let counter = 0;
 
     const letterCount = new Map();
 
     for (let i = 0; i < 5; i++) {
       if (!letterCount.has(w2[i])) letterCount.set(w2[i], 1);
-      else letterCount.set(w2[i], letterCount.get(w2[i]));
+      else letterCount.set(w2[i], letterCount.get(w2[i]) + 1);
     }
+
+    //console.log(letterCount)
 
 
       for (let i = 0; i < 5; i++) {
@@ -74,7 +75,7 @@ function App() {
       const oldGuesses: string[] = guess.previousGuesses;
       oldGuesses.push(guess.currentGuess);
       setGuess({currentGuess: "", previousGuesses: oldGuesses})
-      console.log(guess)
+      //console.log(guess)
 
       let newAnswered: boolean[];
 
@@ -109,7 +110,7 @@ function App() {
           let newCss: Array<Array<string>> = css;
           newCss.push(checkLetters(inputLetters, answerLetters))
           setCss(newCss);
-          console.log(css)
+          //console.log(css)
 
     }
 
@@ -123,7 +124,7 @@ function App() {
 
     setGuess({...guess, currentGuess: (guess.currentGuess + newLetter)})
   
-    console.log(guess)
+    //console.log(guess)
     //console.log("guess =" + guess.currentGuess)
 
   }
