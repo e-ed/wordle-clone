@@ -1,21 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
-export function Word({answer, enabled, inputState, handleChange} : {answer: string, enabled?: boolean, inputState: string, handleChange: (e: React.KeyboardEvent<HTMLInputElement>) => void}) {
-  
+export function Word({ answer, enabled, inputState }: { answer: string; enabled?: boolean, inputState: string})  {
+ 
+    
+
   return (
     <div className='flex-container'>
 
-      <input onKeyDown={(e) => handleChange(e)}  autoFocus maxLength={5} type='text'></input>
+      <div className='letter' >
+        {enabled ? inputState[0] : null}
+      </div>
 
-      <div className='letter' >{inputState[0]} </div> 
-      <div className='letter' >{inputState[1]} </div> 
-      <div className='letter' >{inputState[2]} </div> 
-      <div className='letter' >{inputState[3]} </div> 
-      <div className='letter' >{inputState[4]} </div> 
+      <div className='letter' >
+        {enabled ? inputState[1] : null}
+      </div>
 
-      <button type='submit'></button>
+      <div className='letter' >
+        {enabled ? inputState[2] : null}
+      </div>
 
+      <div className='letter' >
+        {enabled ? inputState[3] : null}
+      </div>
 
+      <div className='letter'>
+        {enabled ? inputState[4] : null}
+      </div>
     </div>
   );
-}
+};
+
+export default Word;
