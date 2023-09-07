@@ -72,6 +72,19 @@ function App() {
           newAnswered = [true, true, false, false, false];
           setAnswered(newAnswered);
           break;
+        case 3:
+          newAnswered = [true, true, true, false, false];
+          setAnswered(newAnswered);
+          break;
+        case 4:
+          newAnswered = [true, true, true, true, false];
+          setAnswered(newAnswered);
+          break;
+        case 5:
+          newAnswered = [true, true, true, true, true];
+          setAnswered(newAnswered);
+          break;
+
       }
           let inputLetters = guess.currentGuess.split("");
           let newCss: Array<Array<string>> = css;
@@ -104,7 +117,7 @@ function App() {
     <Word inputState={guess.previousGuesses.length == 2? guess.currentGuess : guess.previousGuesses[2]} answer={wordleAnswer} answered={answered[2]} css={css[2]} />
     <Word inputState={guess.previousGuesses.length == 3? guess.currentGuess : guess.previousGuesses[3]} answer={wordleAnswer} answered={answered[3]} css={css[3]} />
     <Word inputState={guess.previousGuesses.length == 4? guess.currentGuess : guess.previousGuesses[4]} answer={wordleAnswer} answered={answered[4]} css={css[4]} />
-    <Word inputState={guess.previousGuesses.length == 4? guess.currentGuess : guess.previousGuesses[4]} answer={wordleAnswer} answered={answered[5]} css={css[5]} />
+    <Word inputState={guess.previousGuesses.length == 5? guess.currentGuess : guess.previousGuesses[5]} answer={wordleAnswer} answered={answered[5]} css={css[5]} />
 
     
  
