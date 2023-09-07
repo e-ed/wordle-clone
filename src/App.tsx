@@ -28,12 +28,24 @@ function App() {
 
   let checkLetters = (w1:string[], w2:string[]) => {
     let a:string[] = [];
+    let counter = 0;
+
+    const letterCount = new Map();
+
+    for (let i = 0; i < 5; i++) {
+      if (!letterCount.has(w2[i])) letterCount.set(w2[i], 1);
+      else letterCount.set(w2[i], letterCount.get(w2[i]));
+    }
+
 
       for (let i = 0; i < 5; i++) {
-        if (w1[i] == w2[i]) {
+        if (w1[i] == w2[i] && (letterCount.get(w1[i]) >= 1) ) {
           a.push('correct');
-        } else if (w2.includes(w1[i]))  {
+          letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
+        } else if (w2.includes(w1[i]) && (letterCount.get(w1[i]) >= 1) ){
           a.push('wrongplace');
+          letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
+          
         }
         else {
           a.push('letter');
