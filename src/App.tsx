@@ -77,35 +77,30 @@ function App() {
       setGuess({currentGuess: "", previousGuesses: oldGuesses})
       //console.log(guess)
 
-      let newAnswered: boolean[];
+      let newAnswered: boolean[] = answered;
 
       switch(guess.previousGuesses.length) {
         case 1:
-          newAnswered = [true, false, false, false, false, false];
-          setAnswered(newAnswered);
+          newAnswered[0] = true;
           break;
         case 2:
-          newAnswered = [true, true, false, false, false, false];
-          setAnswered(newAnswered);
+          newAnswered[1] = true;
           break;
         case 3:
-          newAnswered = [true, true, true, false, false, false];
-          setAnswered(newAnswered);
+          newAnswered[2] = true;
           break;
         case 4:
-          newAnswered = [true, true, true, true, false, false];
-          setAnswered(newAnswered);
+          newAnswered[3] = true;
           break;
         case 5:
-          newAnswered = [true, true, true, true, true, false];
-          setAnswered(newAnswered);
+          newAnswered[4] = true;
           break;
         case 6:
-            newAnswered = [true, true, true, true, true, true];
-            setAnswered(newAnswered);
-            break;
-
+          newAnswered[5] = true;
+          break;
       }
+
+          setAnswered(newAnswered);
           let inputLetters = guess.currentGuess.split("");
           let newCss: Array<Array<string>> = css;
           newCss.push(checkLetters(inputLetters, answerLetters))
