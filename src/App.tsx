@@ -10,6 +10,7 @@ import Word from './Word';
 
 
 function App() {
+
   const wordleAnswer: string = 'BEAST';
   let newLetters: string = ""
 
@@ -18,9 +19,9 @@ function App() {
     previousGuesses: [] 
   });
 
- 
 
   const [answered, setAnswered] = useState<boolean[]>([false, false, false, false, false, false]);
+  
   const [css, setCss] = useState<Array<Array<string>>>([]);
 
   let answerLetters: string[] = wordleAnswer.split("")
@@ -44,7 +45,9 @@ function App() {
   }
   
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+   
     let newLetter = e.key.toUpperCase();
+
     if (!newLetter.match(/^[a-zA-Z]+$/)) return;
 
     if (e.key == 'Backspace') {
@@ -65,25 +68,29 @@ function App() {
 
       switch(guess.previousGuesses.length) {
         case 1:
-          newAnswered = [true, false, false, false, false];
+          newAnswered = [true, false, false, false, false, false];
           setAnswered(newAnswered);
           break;
         case 2:
-          newAnswered = [true, true, false, false, false];
+          newAnswered = [true, true, false, false, false, false];
           setAnswered(newAnswered);
           break;
         case 3:
-          newAnswered = [true, true, true, false, false];
+          newAnswered = [true, true, true, false, false, false];
           setAnswered(newAnswered);
           break;
         case 4:
-          newAnswered = [true, true, true, true, false];
+          newAnswered = [true, true, true, true, false, false];
           setAnswered(newAnswered);
           break;
         case 5:
-          newAnswered = [true, true, true, true, true];
+          newAnswered = [true, true, true, true, true, false];
           setAnswered(newAnswered);
           break;
+        case 6:
+            newAnswered = [true, true, true, true, true, true];
+            setAnswered(newAnswered);
+            break;
 
       }
           let inputLetters = guess.currentGuess.split("");
@@ -100,17 +107,29 @@ function App() {
 
     if (guess.currentGuess.length == 5) return;
 
-    setGuess({...guess, currentGuess: guess.currentGuess + newLetter})
+    
 
-    console.log("letter =" + guess.currentGuess)
+    setGuess({...guess, currentGuess: (guess.currentGuess + newLetter)})
+  
+    console.log(guess)
+    //console.log("guess =" + guess.currentGuess)
 
   }
 
+  useEffect(() => {
+    // for some reason, this does not set state correctly
+    //document.addEventListener("keydown", handleInput);
+
+   
+  }, [])
+
+ 
 
 
   return (
     <>
      <input onKeyDown={(e) => handleInput(e)} autoFocus maxLength={5} type='text'/>
+   
     
     <Word inputState={guess.previousGuesses.length == 0? guess.currentGuess : guess.previousGuesses[0]} answer={wordleAnswer} answered={answered[0]} css={css[0]} />
     <Word inputState={guess.previousGuesses.length == 1? guess.currentGuess : guess.previousGuesses[1]} answer={wordleAnswer} answered={answered[1]} css={css[1]} />
