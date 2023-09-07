@@ -4,6 +4,9 @@ import Word from './Word';
 
 
 
+ 
+
+
 
 
 function App() {
@@ -22,6 +25,14 @@ function App() {
   
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let newLetter = e.key.toUpperCase();
+    if (!newLetter.match(/^[0-9a-zA-Z]+$/)) return;
+
+    if (e.key == 'Backspace') {
+      newLetter = guess.currentGuess.slice(0, -1);
+      setGuess({...guess, currentGuess: newLetter});
+      return;
+    }
+
 
     if(e.key == 'Enter') {
       if (guess.currentGuess.length < 5) return;
@@ -29,13 +40,21 @@ function App() {
       oldGuesses.push(guess.currentGuess);
       setGuess({currentGuess: "", previousGuesses: oldGuesses})
       console.log(guess)
+
+      switch(guess.previousGuesses.length) {
+        case 1:
+          console.log(1);
+          break;
+        case 2:
+          console.log(2);
+          break;
+      }
+
     }
 
-    if (e.key == 'Backspace') {
-      newLetter = guess.currentGuess.slice(0, -1);
-      setGuess({...guess, currentGuess: newLetter});
-      return;
-    }
+    if (newLetter.length > 1) return;
+
+    
 
     if (guess.currentGuess.length == 5) return;
 
@@ -51,23 +70,23 @@ function App() {
     <>
      <input onKeyDown={(e) => handleInput(e)} autoFocus maxLength={5} type='text'/>
     
-    <Word inputState={guess.currentGuess} answer='beast' enabled={true} />
+    <Word inputState={guess.previousGuesses.length == 0? guess.currentGuess : guess.previousGuesses[0]} answer='beast' enabled={true} />
    
   
  
-    <Word inputState={guess.currentGuess} answer='beast' enabled={false} />
+    <Word inputState={guess.previousGuesses.length == 1? guess.currentGuess : guess.previousGuesses[0]} answer='beast' enabled={false} />
     
 
    
-    <Word inputState={guess.currentGuess} answer='beast' enabled={false} />
+    <Word inputState={guess.previousGuesses.length == 2? guess.currentGuess : guess.previousGuesses[0]} answer='beast' enabled={false} />
     
 
    
-    <Word  inputState={guess.currentGuess} answer='beast' enabled={false} />
+    <Word  inputState={guess.previousGuesses.length == 3? guess.currentGuess : guess.previousGuesses[0]} answer='beast' enabled={false} />
     
 
    
-    <Word inputState={guess.currentGuess} answer='beast' enabled={false} />
+    <Word inputState={guess.previousGuesses.length == 4? guess.currentGuess : guess.previousGuesses[0]} answer='beast' enabled={false} />
     
  
 
