@@ -16,6 +16,34 @@
   text-shadow: 0px 0px 1px #fff;
 }
 
+.correct {
+  background-color: rgb(108, 236, 91);
+  width: 50px;
+  height: 50px;
+  flex-direction: column;
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 4%;
+  color: transparent;
+  text-shadow: 0px 0px 1px #fff;
+}
+
+.wrongplace {
+  background-color: rgb(224, 235, 75);
+  width: 50px;
+  height: 50px;
+  flex-direction: column;
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 4%;
+  color: transparent;
+  text-shadow: 0px 0px 1px #fff;
+}
+
 body {
   background-color: #282c34;
   background-color: #FFFFFF;

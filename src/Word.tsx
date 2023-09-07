@@ -1,30 +1,30 @@
 import React, { forwardRef, useRef } from 'react';
 
-export function Word({ answer, enabled, inputState }: { answer: string; enabled?: boolean, inputState: string})  {
+export function Word({ answer, answered, inputState , css}: { answer: string; answered: boolean, inputState: string, css: string[]})  {
  
-    
+  
 
   return (
     <div className='flex-container'>
 
-      <div className='letter' >
-        {enabled ? inputState[0] : null}
+      <div className={answered ? css[0] : 'letter'} >
+        {inputState == undefined? null : inputState[0]}
       </div>
 
-      <div className='letter' >
-        {enabled ? inputState[1] : null}
+      <div className={answered ? css[1] : 'letter'} >
+        {inputState == undefined? null : inputState[1]}
       </div>
 
-      <div className='letter' >
-        {enabled ? inputState[2] : null}
+      <div className={answered ? css[2] : 'letter'} >
+        {inputState == undefined? null : inputState[2]}
       </div>
 
-      <div className='letter' >
-        {enabled ? inputState[3] : null}
+      <div className={answered ? css[3] : 'letter'} >
+        {inputState == undefined? null : inputState[3]}
       </div>
 
-      <div className='letter'>
-        {enabled ? inputState[4] : null}
+      <div className={answered ? css[4] : 'letter'}>
+        {inputState == undefined? null : inputState[4]}
       </div>
     </div>
   );
