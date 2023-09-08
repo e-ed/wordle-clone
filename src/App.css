@@ -2,6 +2,23 @@
   text-align: center;
 }
 
+.gameDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.gameDiv:first-child {
+  margin-top: 50px;
+}
+
+.containerLetter {
+  max-height: 100px;
+  display: flex;
+}
+
 .letter {
   border: 2px solid salmon;
   background-color: rgb(49, 49, 49);
@@ -53,10 +70,4 @@ input {
   width: 100%;
   height: 1rem;
   color: transparent;
-
 }
-
-
-
-
-

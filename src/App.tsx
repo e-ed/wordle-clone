@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import Word from "./Word";
 
@@ -163,7 +163,7 @@ function App() {
   }, [handleInput]);
 
   return (
-    <>
+    <div className="gameDiv">
       {/* 
       <input
         onKeyDown={(e) => handleInput(e)}
@@ -233,7 +233,7 @@ function App() {
         answered={answered[5]}
         css={css[5]}
       />
-    </>
+    </div>
   );
 }
 
