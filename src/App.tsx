@@ -1,33 +1,54 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
-import Word from './Word';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import "./App.css";
+import Word from "./Word";
 
+function generateWord() {}
 
-
- 
-
-
-
+// move this from here?
+// if I place these inside App(), they keep running over and over
+const tempAnswers: string[] = [
+  "PLACE",
+  "STARE",
+  "SHADE",
+  "BEAST",
+  "AMEND",
+  "GAMES",
+  "BLACK",
+  "WHITE",
+  "FROWN",
+  "BROWN",
+  "CLOWN",
+  "HASTE",
+];
+const wordleAnswer: string =
+  tempAnswers[Math.floor(Math.random() * tempAnswers.length)];
 
 function App() {
+  console.log(wordleAnswer);
 
-  const wordleAnswer: string = 'STARE';
-  let newLetters: string = ""
-
-  const [guess, setGuess] = useState<{currentGuess: string, previousGuesses: string[]}>({
+  const [guess, setGuess] = useState<{
+    currentGuess: string;
+    previousGuesses: string[];
+  }>({
     currentGuess: "",
-    previousGuesses: [] 
+    previousGuesses: [],
   });
 
+  const [answered, setAnswered] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
-  const [answered, setAnswered] = useState<boolean[]>([false, false, false, false, false, false]);
-  
   const [css, setCss] = useState<Array<Array<string>>>([]);
 
-  let answerLetters: string[] = wordleAnswer.split("")
+  let answerLetters: string[] = wordleAnswer.split("");
 
-  let checkLetters = (w1:string[], w2:string[]) => {
-    let a:string[] = [];
+  let checkLetters = (w1: string[], w2: string[]) => {
+    let a: string[] = [];
 
     const letterCount = new Map();
 
@@ -38,120 +59,181 @@ function App() {
 
     //console.log(letterCount)
 
-
-      for (let i = 0; i < 5; i++) {
-        if (w1[i] == w2[i] && (letterCount.get(w1[i]) >= 1) ) {
-          a.push('correct');
-          letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
-        } else if (w2.includes(w1[i]) && (letterCount.get(w1[i]) >= 1) ){
-          a.push('wrongplace');
-          letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
-          
-        }
-        else {
-          a.push('letter');
-        }
+    for (let i = 0; i < 5; i++) {
+      if (w1[i] == w2[i] && letterCount.get(w1[i]) >= 1) {
+        a.push("correct");
+        letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
+      } else if (w2.includes(w1[i]) && letterCount.get(w1[i]) >= 1) {
+        a.push("wrongplace");
+        letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
+      } else {
+        a.push("letter");
       }
-
+    }
 
     return a;
-  }
-  
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-   
-    let newLetter = e.key.toUpperCase();
+  };
 
-    if (!newLetter.match(/^[a-zA-Z]+$/)) return;
+  // e: React.KeyboardEvent<HTMLInputElement>
 
-    if (e.key == 'Backspace') {
-      newLetter = guess.currentGuess.slice(0, -1);
-      setGuess({...guess, currentGuess: newLetter});
-      return;
-    }
+  const handleInput = useCallback(
+    (e: KeyboardEvent) => {
+      let newLetter = e.key.toUpperCase();
 
+      if (!newLetter.match(/^[a-zA-Z]+$/)) return;
 
-    if(e.key == 'Enter') {
-      if (guess.currentGuess.length < 5) return;
-      const oldGuesses: string[] = guess.previousGuesses;
-      oldGuesses.push(guess.currentGuess);
-      setGuess({currentGuess: "", previousGuesses: oldGuesses})
-      //console.log(guess)
-
-      let newAnswered: boolean[] = answered;
-
-      switch(guess.previousGuesses.length) {
-        case 1:
-          newAnswered[0] = true;
-          break;
-        case 2:
-          newAnswered[1] = true;
-          break;
-        case 3:
-          newAnswered[2] = true;
-          break;
-        case 4:
-          newAnswered[3] = true;
-          break;
-        case 5:
-          newAnswered[4] = true;
-          break;
-        case 6:
-          newAnswered[5] = true;
-          break;
+      if (e.key == "Backspace") {
+        newLetter = guess.currentGuess.slice(0, -1);
+        setGuess({ ...guess, currentGuess: newLetter });
+        return;
       }
 
-          setAnswered(newAnswered);
-          let inputLetters = guess.currentGuess.split("");
-          let newCss: Array<Array<string>> = css;
-          newCss.push(checkLetters(inputLetters, answerLetters))
-          setCss(newCss);
-          //console.log(css)
+      if (e.key == "Enter") {
+        if (guess.currentGuess.length < 5) return;
+        const oldGuesses: string[] = guess.previousGuesses;
+        oldGuesses.push(guess.currentGuess);
+        setGuess({ currentGuess: "", previousGuesses: oldGuesses });
 
-    }
+        //console.log(guess)
 
-    if (newLetter.length > 1) return;
+        let newAnswered: boolean[] = answered;
 
-    
+        switch (guess.previousGuesses.length) {
+          case 1:
+            newAnswered[0] = true;
+            break;
+          case 2:
+            newAnswered[1] = true;
+            break;
+          case 3:
+            newAnswered[2] = true;
+            break;
+          case 4:
+            newAnswered[3] = true;
+            break;
+          case 5:
+            newAnswered[4] = true;
+            break;
+          case 6:
+            newAnswered[5] = true;
+            break;
+        }
 
-    if (guess.currentGuess.length == 5) return;
+        setAnswered(newAnswered);
+        let inputLetters = guess.currentGuess.split("");
+        let newCss: Array<Array<string>> = css;
+        newCss.push(checkLetters(inputLetters, answerLetters));
+        setCss(newCss);
+        //console.log(css)
+      }
 
-    
+      if (newLetter.length > 1) return;
 
-    setGuess({...guess, currentGuess: (guess.currentGuess + newLetter)})
-  
-    //console.log(guess)
-    //console.log("guess =" + guess.currentGuess)
+      if (guess.currentGuess.length == 5) return;
 
-  }
+      let newState = {
+        previousGuesses: guess.previousGuesses,
+        currentGuess: newLetter + guess.currentGuess,
+      };
+      //console.log("debug: " + newLetter + guess.currentGuess);
+
+      //setGuess(newState);
+
+      setGuess((prevGuess) => ({
+        ...prevGuess,
+        currentGuess: prevGuess.currentGuess + newLetter,
+      }));
+
+      console.log(guess);
+
+      console.log(guess.currentGuess);
+
+      //console.log(guess)
+      //console.log("guess =" + guess.currentGuess)
+    },
+    [guess]
+  );
 
   useEffect(() => {
-    // for some reason, this does not set state correctly
-    //document.addEventListener("keydown", handleInput);
+    document.addEventListener("keydown", handleInput);
 
-   
-  }, [])
-
- 
-
+    return () => {
+      document.removeEventListener("keydown", handleInput);
+    };
+  }, [handleInput]);
 
   return (
     <>
-     <input onKeyDown={(e) => handleInput(e)} autoFocus maxLength={5} type='text'/>
-   
-    
-    <Word inputState={guess.previousGuesses.length == 0? guess.currentGuess : guess.previousGuesses[0]} answer={wordleAnswer} answered={answered[0]} css={css[0]} />
-    <Word inputState={guess.previousGuesses.length == 1? guess.currentGuess : guess.previousGuesses[1]} answer={wordleAnswer} answered={answered[1]} css={css[1]} />
-    <Word inputState={guess.previousGuesses.length == 2? guess.currentGuess : guess.previousGuesses[2]} answer={wordleAnswer} answered={answered[2]} css={css[2]} />
-    <Word inputState={guess.previousGuesses.length == 3? guess.currentGuess : guess.previousGuesses[3]} answer={wordleAnswer} answered={answered[3]} css={css[3]} />
-    <Word inputState={guess.previousGuesses.length == 4? guess.currentGuess : guess.previousGuesses[4]} answer={wordleAnswer} answered={answered[4]} css={css[4]} />
-    <Word inputState={guess.previousGuesses.length == 5? guess.currentGuess : guess.previousGuesses[5]} answer={wordleAnswer} answered={answered[5]} css={css[5]} />
+      {/* 
+      <input
+        onKeyDown={(e) => handleInput(e)}
+        autoFocus
+        maxLength={5}
+        type="text"
+      />
+    */}
 
-    
- 
-
-
+      <Word
+        inputState={
+          guess.previousGuesses.length == 0
+            ? guess.currentGuess
+            : guess.previousGuesses[0]
+        }
+        answer={wordleAnswer}
+        answered={answered[0]}
+        css={css[0]}
+      />
+      <Word
+        inputState={
+          guess.previousGuesses.length == 1
+            ? guess.currentGuess
+            : guess.previousGuesses[1]
+        }
+        answer={wordleAnswer}
+        answered={answered[1]}
+        css={css[1]}
+      />
+      <Word
+        inputState={
+          guess.previousGuesses.length == 2
+            ? guess.currentGuess
+            : guess.previousGuesses[2]
+        }
+        answer={wordleAnswer}
+        answered={answered[2]}
+        css={css[2]}
+      />
+      <Word
+        inputState={
+          guess.previousGuesses.length == 3
+            ? guess.currentGuess
+            : guess.previousGuesses[3]
+        }
+        answer={wordleAnswer}
+        answered={answered[3]}
+        css={css[3]}
+      />
+      <Word
+        inputState={
+          guess.previousGuesses.length == 4
+            ? guess.currentGuess
+            : guess.previousGuesses[4]
+        }
+        answer={wordleAnswer}
+        answered={answered[4]}
+        css={css[4]}
+      />
+      <Word
+        inputState={
+          guess.previousGuesses.length == 5
+            ? guess.currentGuess
+            : guess.previousGuesses[5]
+        }
+        answer={wordleAnswer}
+        answered={answered[5]}
+        css={css[5]}
+      />
     </>
-    
   );
 }
 
