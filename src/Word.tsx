@@ -1,5 +1,3 @@
-import React, { forwardRef, useRef } from "react";
-
 export function Word({
   answer,
   answered,
@@ -12,7 +10,7 @@ export function Word({
   css: string[];
 }) {
   return (
-    <div className="flex-container">
+    <div className="flex-container containerLetter">
       <div className={answered ? css[0] : "letter"}>
         {inputState == undefined ? null : inputState[0]}
       </div>
