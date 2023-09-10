@@ -67,7 +67,7 @@ function App() {
         a.push("wrongplace");
         letterCount.set(w1[i], letterCount.get(w1[i]) - 1);
       } else {
-        a.push("letter");
+        a.push("wrong");
       }
     }
 
@@ -164,14 +164,8 @@ function App() {
 
   return (
     <div className="gameDiv">
-      {/* 
-      <input
-        onKeyDown={(e) => handleInput(e)}
-        autoFocus
-        maxLength={5}
-        type="text"
-      />
-    */}
+      <h1 style={{ color: "white" }}>Wordle</h1>
+      <br />
 
       <Word
         inputState={
