@@ -1,1 +1,1 @@
-www.w-ordle.vercel.app
+https://w-ordle.vercel.app
